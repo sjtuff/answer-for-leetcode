@@ -16,3 +16,24 @@ public:
         return number; 
     }
 };
+
+class Solution {
+public:
+    int numJewelsInStones(string J, string S) {
+        char hash[256]={0};
+        for(auto c:J)
+        {
+            hash[c] = 1;
+        }
+        int num=0;
+        for(auto c:S)
+        {
+            if(hash[c]==1)
+            {
+                num++;
+                continue;
+            }
+        }
+        return num;
+    }
+};
