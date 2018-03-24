@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<int> countBits(int num) {
+        vector<int> countbits{0};
+        if(num>0)
+        {
+            for(int i=1;i<=num;i++)
+            {
+                if(i%2==0)
+                {
+                    int n=i/2;
+                    countbits.push_back(countbits[n]);
+                }
+                else
+                {
+                    int n=i/2;
+                    countbits.push_back(countbits[n]+1);
+                }
+            }
+        }
+        return countbits;
+        
+        
+    }
+};
+
+//数学归纳法，奇数等于-1后/2对应的数的1个数+1；偶数等于/2对应的数的1个数
