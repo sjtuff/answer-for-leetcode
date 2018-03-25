@@ -1,0 +1,29 @@
+class Solution(object):
+    def maxCoins(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        #max_num[i][j]表示（i，j）范围内气球的最大收益，
+        #max_num[i][j]=max(max_num[i][k]+max_num[k][j]+nums[k]*nums[i]*num[k])，i<k<j
+        #按照最后剩下的为第k个气球来算，i<k<j
+        nums.insert(0,1)
+        nums.append(1)
+        max_num=[[0 for i in range(len(nums))] for i in range(len(nums))]
+        for i in range(len(nums)):
+            max_num[i][i]=0
+            if (i+1)<len(nums):            
+                max_num[i][i+1]=0
+        for delta in range(2,len(nums)):
+            for i in range(len(nums)):
+                if (i+delta)==len(nums):
+                    break
+                max_k=0
+                for k in range(i+1,i+delta,1):
+                    val=max_num[i][k]+max_num[k][i+delta]+nums[k]*nums[i]*nums[i+delta]
+                    if val>max_k:
+                        max_k=val
+                max_num[i][i+delta]=max_k
+        return max_num[0][len(nums)-1]
+            
+            
