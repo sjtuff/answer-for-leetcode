@@ -1,0 +1,37 @@
+class Solution(object):
+    def findDisappearedNumbers(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        none_ones=[]
+        n = len(nums)
+        i=0
+        while(i<n):
+            nums[i]=nums[i]*(n+1)
+            i=i+1
+        i=0
+        while(i<n):
+            nums[nums[i]//(n+1)-1]=nums[nums[i]//(n+1)-1]+1
+            i=i+1
+        i=0
+        while(i<n):
+            if nums[i]%(n+1)==0:
+                none_ones.append(i+1)
+            i=i+1
+        return none_ones
+
+
+
+
+class Solution(object):
+    def findDisappearedNumbers(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        # res = []
+        # for i in (range(1,len(nums)+1)):
+        #     if i not in nums:
+        #         res.append(i)
+        return list(set(range(1,len(nums)+1)) - set(nums))
