@@ -1,0 +1,73 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int diameterOfBinaryTree(TreeNode* root) {
+        if(!root) return 0;
+        int total = 0;
+        helper(root, total);
+        total--;
+        return total;
+        
+        
+            
+        
+    }
+    void cal_depth(TreeNode*root, int &max,int sum)
+    {
+        if (!root) return;
+        sum++;
+        if (sum > max) max = sum;
+        cal_depth(root->left,max,sum);
+        cal_depth(root->right,max,sum);                    
+        
+    }
+    int cal_total(TreeNode* root)
+    {
+        if (!root) return 0;
+        int left_depth=0, right_depth=0;
+        cal_depth(root->left,left_depth,0);
+        cal_depth(root->right,right_depth,0);
+        int total = left_depth + right_depth + 1;
+        return total;            
+        
+    }
+    void helper(TreeNode* root,int& total)
+    {
+        if(!root) return;
+        int temp = cal_total(root);
+        if (temp>total) total = temp;
+        helper(root->left, total);
+        helper(root->right, total);
+    }
+};
+
+
+
+
+class Solution {
+public:
+    int diameterOfBinaryTree(TreeNode* root) {
+        int res = 0;
+        maxDepth(root, res);
+        return res;
+    }
+    int maxDepth(TreeNode* node, int& res) {
+        if (!node) return 0;
+        if (m.count(node)) return m[node];
+        int left = maxDepth(node->left, res);
+        int right = maxDepth(node->right, res);
+        res = max(res, left + right);
+        return m[node] = (max(left, right) + 1);
+    }
+
+private:
+    unordered_map<TreeNode*, int> m;
+};
