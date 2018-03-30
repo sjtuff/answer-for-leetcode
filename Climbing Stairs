@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int climbStairs(int n) {
+        //递推，f(n)=f(n-1)+f(n-2)，每多一个台阶，等于最后一个台阶直接跨过去f(n-1)和最后一个台阶是大步跨过去f(n-2)
+        if(n==1) return 1;
+        if(n==2) return 2;
+        vector<int> steps; 
+        steps.push_back(1);
+        steps.push_back(2);
+        for(int i=2;i<n;i++)
+        {
+            int sum = steps[i-1]+steps[i-2];
+            steps.push_back(sum);
+        }
+        return steps[n-1];           
+        
+        
+    }
+};
