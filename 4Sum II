@@ -1,0 +1,51 @@
+class Solution {
+public:
+    int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
+        unordered_map<int, int> ABsum;
+        for(int a: A){
+            for(int b: B){
+                ABsum[a+b]++;
+            }
+        }
+        int count = 0;
+        for(int c:C){
+            for(int d:D){
+                auto it =ABsum.find(-c-d);
+                if(it!=ABsum.end()){
+                    count += it->second;
+                }
+            }
+        }
+        return count;
+
+    }
+};
+
+
+class Solution {
+public:
+    int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
+        int res = 0;
+        unordered_map<int, int> AB, CD;
+        for(int i=0;i<A.size();i++)
+        {
+            for(int j=0;j<B.size();j++)
+            {
+                AB[A[i]+B[j]]++;
+            }
+        }
+        for(int i=0;i<C.size();i++)
+        {
+            for(int j=0;j<D.size();j++)
+            {
+                CD[C[i]+D[j]]++;
+            }
+        }
+        for(auto c:AB)
+        {
+            res += CD[-c.first]*c.second;
+        }
+        return res;
+
+    }
+};
