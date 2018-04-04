@@ -1,0 +1,45 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+int key=[](){
+    std::ios::sync_with_stdio(false);
+    return 0;
+}();
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        TreeNode *root1 = root;
+        TreeNode *root2 = root;
+        bool sym = true;
+        helper(root1,root2,sym);
+        return sym;
+        
+    }
+    
+    void helper(TreeNode *root1, TreeNode *root2, bool &sym)
+    {
+        if((!root1&&root2)||(root1&&!root2))
+        {
+            sym = false;
+            return;
+        }
+        if(!root1&&!root2)
+        {
+            return;
+        }
+        if(root1->val != root2->val) 
+        {
+            sym = false;
+            return;
+        }
+        helper(root1->left,root2->right,sym);
+        helper(root1->right,root2->left,sym);
+        
+    }
+};
