@@ -1,0 +1,55 @@
+static int x = [](){
+    std::ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    return 0;
+}();
+
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        if(height.size()==0 || height.size()==1 || height.size()==2) return 0;
+        int start = 0, end = height.size()-1;
+        int res = 0;
+        find_higher(start,end,height,res);
+        
+        return res;
+    }
+    void find_higher(int start, int end, vector<int>& height,int &res)
+    {
+        if ((end - start)<=1) return;
+        int max = 0;
+        int new_start,new_end;
+        for(int i=start;i<=end;i++)
+        {
+            if(height[i]>=max)
+            {
+                max = height[i];
+                new_start = i;
+            }
+        }
+        max = 0;
+        for(int i=start;i<=end;i++)
+        {
+            if(height[i]>=max && i!=new_start)
+            {
+                max = height[i];
+                new_end = i;
+            }
+        }
+        if(new_start>new_end)
+        {
+            int temp = new_start;
+            new_start = new_end;
+            new_end = temp;
+        }
+        int h = min(height[new_start],height[new_end]);
+        for(int i=new_start+1;i<new_end;i++)
+        {
+            res += (h - height[i]);
+        }
+        find_higher(start,new_start,height,res);
+        find_higher(new_end,end,height,res);
+        
+        
+    }
+};
