@@ -1,0 +1,65 @@
+class Solution {
+public:
+    int InversePairs(vector<int> data) {
+        long long total=0;
+        DividedPairs(data,0,data.size()-1,total);
+        return total%1000000007;
+        
+        
+    }
+    void DividedPairs(vector<int> &data, int start, int end, long long &total)
+    {
+        if(end>start)
+        {
+            int mid = (start + end) / 2;
+            DividedPairs(data,start,mid,total);
+            DividedPairs(data,mid+1,end,total);
+            MergePairs(data,start,mid,end,total);
+        }
+    }
+    void MergePairs(vector<int> &data, int start, int mid, int end, long long &total)
+    {
+        if(start==end) return;
+        vector<int> temp(end-start+1,0);
+        int n1=mid, n2=end, n3=end-start;
+        while(n1>=start && n2>mid)
+        {
+            if(data[n1]>data[n2])
+            {
+                total += (n2-mid);
+                temp[n3]=data[n1];
+                n3--;
+                n1--;
+            }
+            else
+            {
+                temp[n3] = data[n2];
+                n3--;
+                n2--;
+            }
+        }
+        if(n1<start)
+        {
+            while(n2>mid)
+            {
+                temp[n3]=data[n2];
+                n3--;
+                n2--;
+            }
+        }
+        else
+        {
+            while(n1>=start)
+            {
+                temp[n3]=data[n1];
+                n3--;
+                n1--;
+            }
+        }
+        for(int i=start;i<=end;i++)
+        {
+            data[i]=temp[i-start];
+        }
+        
+    }
+};
