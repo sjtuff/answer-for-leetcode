@@ -1,0 +1,24 @@
+#include <algorithm>
+class Solution {
+public:
+    int maxPathSum(TreeNode* root) {
+        int res = root->val;
+        helper(root,res);
+        return res;
+        
+        
+    }
+    int helper(TreeNode* root, int &res)
+    {
+        if(!root) return 0;
+        int left_val = helper(root->left,res);
+        int right_val = helper(root->right,res);
+        res = max(res,right_val + left_val + root->val);
+        res = max(res,root->val);
+        res = max(res,left_val + root->val);
+        res = max(res,right_val + root->val);
+        int temp = max(left_val + root->val, right_val + root->val);
+        temp = max(temp, root->val);
+        return temp;
+    }
+};
