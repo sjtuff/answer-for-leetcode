@@ -1,0 +1,70 @@
+class Solution {
+public:
+    TreeNode* reConstructBinaryTree(vector<int> &pre,vector<int> &vin) {
+        if(vin.size()==0||pre.size()==0||vin.size()!=pre.size()) return NULL;
+        vector<int> left_pre,left_vin;
+        vector<int> right_pre,right_vin;
+        int mid;
+        for(int i=0;i<vin.size();i++)
+        {
+            if(vin[i]==pre[0])
+            {
+                mid = i;
+                break;
+            }
+        }
+        for(int i=0;i<mid;i++)
+        {
+            left_pre.push_back(pre[i+1]);
+            left_vin.push_back(vin[i]);
+        }
+        for(int i=mid+1;i<vin.size();i++)
+        {
+            right_pre.push_back(pre[i]);
+            right_vin.push_back(vin[i]);
+        }
+        TreeNode* root = new TreeNode(pre[0]);
+        root->left = reConstructBinaryTree(left_pre,left_vin);
+        root->right = reConstructBinaryTree(right_pre,right_vin);
+        return root;
+        
+
+    }
+
+
+};
+
+
+
+
+
+class Solution {
+public:
+    TreeNode* reConstructBinaryTree(vector<int> pre,vector<int> vin) {
+        TreeNode *root = new TreeNode(0);
+        int end = vin.size();
+        root = helper(pre,vin,0,end - 1);
+        return root;
+        
+
+    }
+    TreeNode* helper(vector<int> &pre,vector<int> &vin, int start, int end)
+    {
+        if((end - start)==0) return NULL;
+        for(int i=0;i<pre.size();i++)
+        {
+            for(int j=start;j<=end;j++)
+            {
+                if(pre[i]==vin[j])
+                {
+                    TreeNode *root = new TreeNode(pre[i]);
+                    root->left = helper(pre,vin,start,j-1);
+                    root->right = helper(pre,vin,j+1,end);
+                    return root;
+                }
+            }
+        }
+            
+    }
+
+};
