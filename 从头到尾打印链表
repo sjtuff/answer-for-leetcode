@@ -1,0 +1,25 @@
+/**
+*  struct ListNode {
+*        int val;
+*        struct ListNode *next;
+*        ListNode(int x) :
+*              val(x), next(NULL) {
+*        }
+*  };
+*/
+class Solution {
+public:
+    vector<int> printListFromTailToHead(ListNode* head) {
+        vector<int> res;
+        PrintVal(res, head);
+        return res;
+        
+        
+    }
+    void PrintVal(vector<int> &orig, ListNode* head)
+    {
+        if(!head) return;
+        PrintVal(orig, head->next);
+        orig.push_back(head->val);
+    }
+};
